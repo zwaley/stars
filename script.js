@@ -375,6 +375,7 @@ const fortuneTemplates = {
 let selectedZodiac = null;
 let selectedFocus = 'overall';
 let selectedTime = 'today';
+let currentPage = 'zodiac'; // 当前页面状态: zodiac, focus, result
 
 // DOM 元素
 const zodiacSelector = document.getElementById('zodiacSelector');
@@ -500,6 +501,12 @@ function getZodiacFromDate(dateString) {
 function showFocusSelector() {
     zodiacSelector.style.display = 'none';
     focusSelector.style.display = 'block';
+    fortuneResult.style.display = 'none';
+    
+    // 推送历史状态
+    if (currentPage !== 'focus') {
+        pushHistoryState('focus');
+    }
     
     // 滚动到关注选择区域
     focusSelector.scrollIntoView({ behavior: 'smooth' });
@@ -589,6 +596,9 @@ function generateFortune() {
     // 显示结果
     focusSelector.style.display = 'none';
     fortuneResult.style.display = 'block';
+    
+    // 推送历史状态
+    pushHistoryState('result');
     
     // 滚动到结果区域
     fortuneResult.scrollIntoView({ behavior: 'smooth' });
@@ -759,10 +769,8 @@ function resetToStart() {
     document.querySelector('.focus-card[data-focus="overall"]').classList.add('selected');
     document.querySelector('.time-btn[data-time="today"]').classList.add('active');
     
-    // 显示星座选择器
-    zodiacSelector.style.display = 'block';
-    focusSelector.style.display = 'none';
-    fortuneResult.style.display = 'none';
+    // 使用历史记录管理回到星座选择页面
+    showZodiacSelector();
     
     // 滚动到顶部
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -915,9 +923,63 @@ function showDailyOverview() {
     
     alert(overviewText);
     
+    // 确保显示星座选择页面
+    showZodiacSelector();
+}
+
+// 浏览器历史记录管理
+function initHistoryManagement() {
+    // 初始化历史状态
+    history.replaceState({ page: 'zodiac' }, '', window.location.href);
+    
+    // 监听浏览器后退事件
+    window.addEventListener('popstate', function(event) {
+        if (event.state) {
+            handleBackNavigation(event.state.page);
+        } else {
+            // 如果没有状态，回到星座选择页面
+            showZodiacSelector();
+        }
+    });
+}
+
+// 处理后退导航
+function handleBackNavigation(targetPage) {
+    switch(targetPage) {
+        case 'zodiac':
+            showZodiacSelector();
+            break;
+        case 'focus':
+            showFocusSelector();
+            break;
+        case 'result':
+            // 如果在结果页面后退，回到关注选择页面
+            showFocusSelector();
+            break;
+        default:
+            showZodiacSelector();
+    }
+}
+
+// 显示星座选择页面
+function showZodiacSelector() {
+    zodiacSelector.style.display = 'block';
+    focusSelector.style.display = 'none';
+    fortuneResult.style.display = 'none';
+    currentPage = 'zodiac';
+    
     // 滚动到星座选择区域
     zodiacSelector.scrollIntoView({ behavior: 'smooth' });
 }
 
-// 页面加载完成后检查每日运势
-window.addEventListener('load', checkDailyFortune);
+// 推送新的历史状态
+function pushHistoryState(page) {
+    history.pushState({ page: page }, '', window.location.href);
+    currentPage = page;
+}
+
+// 页面加载完成后初始化
+window.addEventListener('load', function() {
+    initHistoryManagement();
+    checkDailyFortune();
+});
