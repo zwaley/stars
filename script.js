@@ -747,7 +747,7 @@ function shareFortuneResult() {
     } else {
         // 复制到剪贴板
         navigator.clipboard.writeText(shareText).then(() => {
-            alert('运势结果已复制到剪贴板！包含在线体验链接。');
+            alert('运势结果已复制到剪贴板！');
         }).catch(() => {
             alert('分享失败，请手动复制分享内容。');
         });
