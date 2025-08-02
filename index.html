@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星运占卜 - 探索你的星座奥秘</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="stars-bg"></div>
+    
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">✨ 星运占卜</h1>
+            <p class="subtitle">探索你的星座奥秘，预见未来运势</p>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <!-- 星座选择区域 -->
+            <section class="zodiac-selector" id="zodiacSelector">
+                <h2>选择你的星座</h2>
+                <div class="input-method">
+                    <button class="method-btn active" data-method="zodiac">我知道星座</button>
+                    <button class="method-btn" data-method="birthday">输入生日</button>
+                </div>
+                
+                <!-- 星座选择 -->
+                <div class="zodiac-grid" id="zodiacGrid">
+                    <div class="zodiac-card" data-zodiac="aries">
+                        <div class="zodiac-icon">♈</div>
+                        <div class="zodiac-name">白羊座</div>
+                        <div class="zodiac-date">3.21-4.19</div>
+                    </div>
+                    <div class="zodiac-card" data-zodiac="taurus">
+                        <div class="zodiac-icon">♉</div>
+                        <div class="zodiac-name">金牛座</div>
+                        <div class="zodiac-date">4.20-5.20</div>
+                    </div>
+                    <div class="zodiac-card" data-zodiac="gemini">
+                        <div class="zodiac-icon">♊</div>
+                        <div class="zodiac-name">双子座</div>
+                        <div class="zodiac-date">5.21-6.21</div>
+                    </div>
+                    <div class="zodiac-card" data-zodiac="cancer">
+                        <div class="zodiac-icon">♋</div>
+                        <div class="zodiac-name">巨蟹座</div>
+                        <div class="zodiac-date">6.22-7.22</div>
+                    </div>
+                    <div class="zodiac-card" data-zodiac="leo">
+                        <div class="zodiac-icon">♌</div>
+                        <div class="zodiac-name">狮子座</div>
+                        <div class="zodiac-date">7.23-8.22</div>
+                    </div>
+                    <div class="zodiac-card" data-zodiac="virgo">
+                        <div class="zodiac-icon">♍</div>
+                        <div class="zodiac-name">处女座</div>
+                        <div class="zodiac-date">8.23-9.22</div>
+                    </div>
+                    <div class="zodiac-card" data-zodiac="libra">
+                        <div class="zodiac-icon">♎</div>
+                        <div class="zodiac-name">天秤座</div>
+                        <div class="zodiac-date">9.23-10.23</div>
+                    </div>
+                    <div class="zodiac-card" data-zodiac="scorpio">
+                        <div class="zodiac-icon">♏</div>
+                        <div class="zodiac-name">天蝎座</div>
+                        <div class="zodiac-date">10.24-11.22</div>
+                    </div>
+                    <div class="zodiac-card" data-zodiac="sagittarius">
+                        <div class="zodiac-icon">♐</div>
+                        <div class="zodiac-name">射手座</div>
+                        <div class="zodiac-date">11.23-12.21</div>
+                    </div>
+                    <div class="zodiac-card" data-zodiac="capricorn">
+                        <div class="zodiac-icon">♑</div>
+                        <div class="zodiac-name">摩羯座</div>
+                        <div class="zodiac-date">12.22-1.19</div>
+                    </div>
+                    <div class="zodiac-card" data-zodiac="aquarius">
+                        <div class="zodiac-icon">♒</div>
+                        <div class="zodiac-name">水瓶座</div>
+                        <div class="zodiac-date">1.20-2.18</div>
+                    </div>
+                    <div class="zodiac-card" data-zodiac="pisces">
+                        <div class="zodiac-icon">♓</div>
+                        <div class="zodiac-name">双鱼座</div>
+                        <div class="zodiac-date">2.19-3.20</div>
+                    </div>
+                </div>
+                
+                <!-- 生日输入 -->
+                <div class="birthday-input" id="birthdayInput" style="display: none;">
+                    <div class="input-group">
+                        <label for="birthDate">请输入你的生日：</label>
+                        <input type="date" id="birthDate" class="date-input">
+                        <button class="confirm-btn" id="confirmBirthday">确认</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 运势关注选择 -->
+            <section class="focus-selector" id="focusSelector" style="display: none;">
+                <h2>你最关注哪方面的运势？</h2>
+                <div class="focus-grid">
+                    <div class="focus-card" data-focus="love">
+                        <div class="focus-icon">💕</div>
+                        <div class="focus-name">爱情运势</div>
+                    </div>
+                    <div class="focus-card" data-focus="career">
+                        <div class="focus-icon">💼</div>
+                        <div class="focus-name">事业运势</div>
+                    </div>
+                    <div class="focus-card" data-focus="wealth">
+                        <div class="focus-icon">💰</div>
+                        <div class="focus-name">财运</div>
+                    </div>
+                    <div class="focus-card" data-focus="health">
+                        <div class="focus-icon">🌿</div>
+                        <div class="focus-name">健康运势</div>
+                    </div>
+                    <div class="focus-card" data-focus="overall">
+                        <div class="focus-icon">🌟</div>
+                        <div class="focus-name">综合运势</div>
+                    </div>
+                </div>
+                
+                <div class="time-selector">
+                    <h3>时间范围：</h3>
+                    <div class="time-options">
+                        <button class="time-btn active" data-time="today">今日</button>
+                        <button class="time-btn" data-time="week">本周</button>
+                        <button class="time-btn" data-time="month">本月</button>
+                        <button class="time-btn" data-time="quarter">未来三个月</button>
+                    </div>
+                </div>
+                
+                <button class="fortune-btn" id="getFortune">开始占卜</button>
+            </section>
+
+            <!-- 运势结果 -->
+            <section class="fortune-result" id="fortuneResult" style="display: none;">
+                <div class="result-header">
+                    <div class="selected-zodiac">
+                        <div class="zodiac-large-icon" id="resultZodiacIcon"></div>
+                        <div class="zodiac-info">
+                            <h2 id="resultZodiacName"></h2>
+                            <p id="resultZodiacElement"></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fortune-cards">
+                    <div class="fortune-card main-fortune">
+                        <h3 id="mainFortuneTitle"></h3>
+                        <div class="fortune-score">
+                            <div class="score-circle">
+                                <span id="fortuneScore">85</span>
+                                <small>分</small>
+                            </div>
+                        </div>
+                        <p id="mainFortuneContent"></p>
+                    </div>
+                    
+                    <div class="fortune-card tarot-card">
+                        <h3>塔罗指引</h3>
+                        <div class="tarot-info">
+                            <div class="tarot-name" id="tarotName"></div>
+                            <p id="tarotMeaning"></p>
+                        </div>
+                    </div>
+                    
+                    <div class="fortune-card lucky-info">
+                        <h3>幸运信息</h3>
+                        <div class="lucky-grid">
+                            <div class="lucky-item">
+                                <span class="lucky-label">幸运色彩：</span>
+                                <span id="luckyColor"></span>
+                            </div>
+                            <div class="lucky-item">
+                                <span class="lucky-label">幸运数字：</span>
+                                <span id="luckyNumber"></span>
+                            </div>
+                            <div class="lucky-item">
+                                <span class="lucky-label">幸运方位：</span>
+                                <span id="luckyDirection"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="fortune-card advice">
+                        <h3>运势建议</h3>
+                        <p id="fortuneAdvice"></p>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="share-btn" id="shareResult">分享运势</button>
+                    <button class="restart-btn" id="restartFortune">重新占卜</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 星运占卜 - 仅供娱乐参考</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
