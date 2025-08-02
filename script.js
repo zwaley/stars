@@ -726,18 +726,18 @@ function getTarotMeaning(tarotName) {
 // 分享运势结果
 function shareFortuneResult() {
     const zodiac = zodiacData[selectedZodiac];
-    const shareText = `我的${zodiac.name}${fortuneTemplates[selectedFocus].title}：${document.getElementById('fortuneScore').textContent}分！快来星运占卜看看你的运势吧！`;
+    const shareText = `我的${zodiac.name}${fortuneTemplates[selectedFocus].title}：${document.getElementById('fortuneScore').textContent}分！快来星运占卜看看你的运势吧！\n\n🔗 在线体验：https://zwaley.github.io/stars/`;
     
     if (navigator.share) {
         navigator.share({
             title: '星运占卜',
             text: shareText,
-            url: window.location.href
+            url: 'https://zwaley.github.io/stars/'
         });
     } else {
         // 复制到剪贴板
         navigator.clipboard.writeText(shareText).then(() => {
-            alert('运势结果已复制到剪贴板！');
+            alert('运势结果已复制到剪贴板！包含在线体验链接。');
         }).catch(() => {
             alert('分享失败，请手动复制分享内容。');
         });
@@ -871,12 +871,52 @@ function checkDailyFortune() {
                         selectedFocus = 'overall';
                         selectedTime = 'today';
                         generateFortune();
+                        return;
                     }
                 }
+                
+                // 如果没有保存的星座偏好，显示今日整体运势概览
+                showDailyOverview();
             }
             localStorage.setItem('lastFortuneCheck', today);
         }, 2000);
     }
+}
+
+// 显示今日整体运势概览
+function showDailyOverview() {
+    const todayOverview = {
+        date: new Date().toLocaleDateString('zh-CN', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric',
+            weekday: 'long'
+        }),
+        cosmicEnergy: [
+            '今日宇宙能量整体和谐，适合新的开始和重要决定。',
+            '行星排列呈现稳定格局，各星座都有不同程度的正面影响。',
+            '月相能量温和，情感和直觉都处于敏锐状态。',
+            '水星运行顺畅，沟通和学习效果佳。',
+            '金星散发温暖能量，人际关系和美感体验增强。'
+        ],
+        generalAdvice: [
+            '保持开放的心态，今天可能有意外的好消息。',
+            '适合进行创意工作和艺术创作。',
+            '人际交往中展现真诚，会获得他人的好感。',
+            '财务方面保持理性，避免冲动消费。',
+            '健康状况良好，适合户外活动。'
+        ]
+    };
+    
+    const randomEnergy = todayOverview.cosmicEnergy[Math.floor(Math.random() * todayOverview.cosmicEnergy.length)];
+    const randomAdvice = todayOverview.generalAdvice[Math.floor(Math.random() * todayOverview.generalAdvice.length)];
+    
+    const overviewText = `📅 ${todayOverview.date}\n\n🌟 今日宇宙能量：\n${randomEnergy}\n\n💫 今日建议：\n${randomAdvice}\n\n想要查看专属于你的详细运势吗？请选择你的星座开始占卜！`;
+    
+    alert(overviewText);
+    
+    // 滚动到星座选择区域
+    zodiacSelector.scrollIntoView({ behavior: 'smooth' });
 }
 
 // 页面加载完成后检查每日运势
